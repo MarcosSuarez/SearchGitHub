@@ -14,6 +14,7 @@
 		17D2A7AF20FCA85900EBA290 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17D2A7AD20FCA85900EBA290 /* LaunchScreen.storyboard */; };
 		17D2A7BA20FCA85900EBA290 /* SearchGitHubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D2A7B920FCA85900EBA290 /* SearchGitHubTests.swift */; };
 		17D2A7C520FCA85900EBA290 /* SearchGitHubUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D2A7C420FCA85900EBA290 /* SearchGitHubUITests.swift */; };
+		17D2A7D320FCA8BF00EBA290 /* APIGitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D2A7D220FCA8BF00EBA290 /* APIGitHub.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		17D2A7C020FCA85900EBA290 /* SearchGitHubUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SearchGitHubUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		17D2A7C420FCA85900EBA290 /* SearchGitHubUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGitHubUITests.swift; sourceTree = "<group>"; };
 		17D2A7C620FCA85900EBA290 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		17D2A7D220FCA8BF00EBA290 /* APIGitHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIGitHub.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				17D2A7AB20FCA85900EBA290 /* Assets.xcassets */,
 				17D2A7AD20FCA85900EBA290 /* LaunchScreen.storyboard */,
 				17D2A7B020FCA85900EBA290 /* Info.plist */,
+				17D2A7D220FCA8BF00EBA290 /* APIGitHub.swift */,
 			);
 			path = SearchGitHub;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 			files = (
 				17D2A7A720FCA85100EBA290 /* ViewController.swift in Sources */,
 				17D2A7A520FCA85100EBA290 /* AppDelegate.swift in Sources */,
+				17D2A7D320FCA8BF00EBA290 /* APIGitHub.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,7 +367,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -417,7 +421,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;

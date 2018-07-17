@@ -12,14 +12,18 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        //"MarcandoLaRuta"
+        APIGitHub.repositories(by:"tetris+language:assembly&sort=stars&order=desc") { (array) in
+            print("total repositorios: ", array.count)
+            let ordenado = array.sorted(by: { $0.owner.login.lowercased() < $1.owner.login.lowercased() })
+            
+            ordenado.forEach({ (repositorio) in
+                print(repositorio.owner.login)
+            })
+        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
+    
+    
 
 }
 
