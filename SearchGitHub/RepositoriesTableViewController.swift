@@ -50,8 +50,18 @@ class RepositoriesTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "repoCell", for: indexPath)
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "repoCell", for: indexPath) as! RepoCell
+        
+        // Find Avatar.
+        let url = URL(string: self.repositories[indexPath.row].owner.avatar_url)
+        let data = try? Data(contentsOf: url!)
+        
+        cell.avatar.image = UIImage(data: data!)
+        cell.fullNameRepo.text = self.repositories[indexPath.row].full_name
+        
+        // Find last update.
+        cell.updateRepo.text = self.repositories[indexPath.row].updated_at
+        
         return cell
     }
     
