@@ -20,25 +20,10 @@ class RepositoriesTableViewController: UITableViewController {
         // preserve selection between presentations
          self.clearsSelectionOnViewWillAppear = false
         
-        
-        APIGitHub.repositories(by: "MarcandoLaRuta") { (array) in
-            print("total repositorios: ", array.count)
-            self.repositories = array.sorted(by: { $0.owner.login.lowercased() < $1.owner.login.lowercased() })
-            
-            self.repositories.forEach({ (repositorio) in
-                print(repositorio.owner.login)
-            })
-            
-            // Update data in Cell
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
+        tableView.tableFooterView = searchBar
     }
 
-
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -62,8 +47,6 @@ class RepositoriesTableViewController: UITableViewController {
         cell.avatar.image = UIImage(data: data!)
         cell.avatar.circular()
         
-        
-        
         cell.fullNameRepo.text = self.repositories[indexPath.row].full_name
         
         // Find last update.
@@ -72,4 +55,37 @@ class RepositoriesTableViewController: UITableViewController {
         return cell
     }
     
+}
+
+extension RepositoriesTableViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        guard let searchText = searchBar.text, !searchText.isEmpty else { return }
+        
+        APIGitHub.repositories(by: searchText) { (array) in
+            print("total repositorios: ", array.count)
+            self.repositories = array.sorted(by: { $0.owner.login.lowercased() < $1.owner.login.lowercased() })
+            
+            self.repositories.forEach({ (repositorio) in
+                print(repositorio.owner.login)
+            })
+            
+            // Update data in Cell
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+        searchBar.showsCancelButton = false
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        searchBar.resignFirstResponder()
+    }
 }

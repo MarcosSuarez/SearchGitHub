@@ -10,7 +10,6 @@ import UIKit
 
 class RepoCell: UITableViewCell {
     
-    @IBOutlet weak var celda: UIView!
     @IBOutlet weak var avatar: UIImageView!
     @IBOutlet weak var fullNameRepo: UILabel!
     @IBOutlet weak var updateRepo: UILabel!

@@ -44,9 +44,9 @@ class APIGitHub {
     /// Search repositories by String.
     static func repositories(by: String, completion: @escaping ([GHRepository])-> Void) {
         
-        let url = URL(string: basePath + searchRepo + by)
-        print("URL: \n",url ?? "")
-        URLSession.shared.dataTask(with: url!) { (data, response, error) in
+        guard let url = URL(string: basePath + searchRepo + by) else { completion([]); return }
+        print("URL: \n",url)
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
             
             guard error == nil else {
                 print("--- request failed: \n",error ?? "Error hasn't description")
