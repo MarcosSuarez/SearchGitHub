@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1727219220FFB319000216E7 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1727219120FFB319000216E7 /* Extension.swift */; };
 		17374FDC20FE505600C0B083 /* RepositoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17374FDB20FE505600C0B083 /* RepositoriesTableViewController.swift */; };
 		1738BD6820FF3513004DA7E3 /* RepoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1738BD6720FF3513004DA7E3 /* RepoCell.swift */; };
 		17D2A7A520FCA85100EBA290 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D2A7A420FCA85100EBA290 /* AppDelegate.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1727219120FFB319000216E7 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		17374FDB20FE505600C0B083 /* RepositoriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesTableViewController.swift; sourceTree = "<group>"; };
 		1738BD6720FF3513004DA7E3 /* RepoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoCell.swift; sourceTree = "<group>"; };
 		17D2A7A120FCA85100EBA290 /* SearchGitHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SearchGitHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,6 +103,7 @@
 		17D2A7A320FCA85100EBA290 /* SearchGitHub */ = {
 			isa = PBXGroup;
 			children = (
+				1727219120FFB319000216E7 /* Extension.swift */,
 				17D2A7A420FCA85100EBA290 /* AppDelegate.swift */,
 				17D2A7D220FCA8BF00EBA290 /* APIGitHub.swift */,
 				17374FDB20FE505600C0B083 /* RepositoriesTableViewController.swift */,
@@ -262,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1727219220FFB319000216E7 /* Extension.swift in Sources */,
 				17D2A7A520FCA85100EBA290 /* AppDelegate.swift in Sources */,
 				17D2A7D320FCA8BF00EBA290 /* APIGitHub.swift in Sources */,
 				17374FDC20FE505600C0B083 /* RepositoriesTableViewController.swift in Sources */,

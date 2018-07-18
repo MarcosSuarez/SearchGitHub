@@ -18,9 +18,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="YvY-qd-TyR">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="repoCell" rowHeight="75" id="08K-w4-H6k" customClass="RepoCell" customModule="SearchGitHub" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="75"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="08K-w4-H6k" id="ayL-Eg-RyJ">
                                     <rect key="frame" x="0.0" y="0.0" width="341" height="74.5"/>
@@ -70,6 +75,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="REPOSITORIES" id="TUn-bs-bGf"/>
+                    <connections>
+                        <outlet property="searchBar" destination="YvY-qd-TyR" id="ynO-7u-GRr"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4mV-Ru-Luz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

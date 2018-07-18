@@ -12,11 +12,14 @@ class RepositoriesTableViewController: UITableViewController {
 
     var repositories = [GHRepository]()
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // preserve selection between presentations
          self.clearsSelectionOnViewWillAppear = false
+        
         
         APIGitHub.repositories(by: "MarcandoLaRuta") { (array) in
             print("total repositorios: ", array.count)
@@ -57,6 +60,10 @@ class RepositoriesTableViewController: UITableViewController {
         let data = try? Data(contentsOf: url!)
         
         cell.avatar.image = UIImage(data: data!)
+        cell.avatar.circular()
+        
+        
+        
         cell.fullNameRepo.text = self.repositories[indexPath.row].full_name
         
         // Find last update.
