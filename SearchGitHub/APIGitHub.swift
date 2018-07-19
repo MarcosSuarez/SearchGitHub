@@ -25,6 +25,7 @@ struct GHRepository: Codable {
     let language: String? //"language": "Swift"
     let html_url: String? // Repository Web
     let description: String?
+    let has_projects: Bool?
 }
 
 struct GHOwner: Codable {
@@ -35,19 +36,21 @@ struct GHOwner: Codable {
 
 /// API to request information from GitHub
 class APIGitHub {
-    // https://api.github.com/search/repositories?q=MarcandoLaRuta
-    private static let basePath = "https://api.github.com/search/repositories?q="
+    
+    private static let basePath = "https://api.github.com/"
     private static let searchRepo = "search/repositories?q="
     private static let hasProyectPath = "+has_projects"
     
-    var hasProyect:Bool = false
+    static var withPublicProyect:Bool = false
     
     private init() {}
     
     /// Search repositories by String.
     static func repositories(by: String, completion: @escaping ([GHRepository])-> Void) {
     
-        guard let url = URL(string: basePath + by + hasProyectPath) else { completion([]); return }
+        let textSearch = by.replacingOccurrences(of: " ", with: "+")
+        
+        guard let url = URL(string: basePath + searchRepo + textSearch + (withPublicProyect ? hasProyectPath : "") ) else { completion([]); return }
         print("URL: \n",url)
         
         
@@ -58,6 +61,8 @@ class APIGitHub {
                 completion([])
                 return
             }
+            
+            print("Respuesta del servidor Github: \n", response ?? "")
             
             if let data = data {
                 do {
