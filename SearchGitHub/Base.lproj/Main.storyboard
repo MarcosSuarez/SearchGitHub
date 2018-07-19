@@ -41,9 +41,9 @@
                                                 <constraint firstAttribute="height" constant="70" id="hjo-xP-xAN"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Repository Name" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oYJ-90-ZF6">
-                                            <rect key="frame" x="94" y="11" width="239" height="21"/>
-                                            <fontDescription key="fontDescription" name="Rockwell-Regular" family="Rockwell" pointSize="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Repository Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oYJ-90-ZF6">
+                                            <rect key="frame" x="94" y="11" width="239" height="29"/>
+                                            <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="18"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
