@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import SafariServices
 
-class RepositoriesTableViewController: UITableViewController {
+class RepositoriesTableViewController: UITableViewController, SFSafariViewControllerDelegate {
     
     var repositories = [GHRepository]()
     
@@ -19,6 +20,18 @@ class RepositoriesTableViewController: UITableViewController {
         
         // preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
+    }
+    
+    // MARK: - Safari
+    private func goRepositoryDetail(url: String) {
+        
+        guard let urlrepository = URL(string: url) else { return }
+        
+        let safari = SFSafariViewController(url: urlrepository)
+        
+        present(safari, animated: true)
+        
+        safari.delegate = self
     }
     
     // MARK: - Table view data source
@@ -53,8 +66,13 @@ class RepositoriesTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Go to detail.
+        goRepositoryDetail(url: repositories[indexPath.row].html_url!)
+    }
 }
 
+//MARK: - Search bar
 extension RepositoriesTableViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -64,17 +82,15 @@ extension RepositoriesTableViewController: UISearchBarDelegate {
         
         guard let searchText = searchBar.text, !searchText.isEmpty else { return }
         
-        APIGitHub.repositories(by: searchText) { [weak self](array) in
-            print("total repositorios: ", array.count)
-            self?.repositories = array.sorted(by: { ($0.owner?.login?.lowercased())! < ($1.owner?.login?.lowercased())! })
+        APIGitHub.repositories(by: searchText) { (array) in
             
-            self?.repositories.forEach({ (repositorio) in
-                print(repositorio.owner?.login)
-            })
+            print("total repositorios: ", array.count)
+            
+            self.repositories = array
             
             // Update data in Cell
             DispatchQueue.main.async {
-                self?.tableView.reloadData()
+                self.tableView.reloadData()
             }
         }
     }
