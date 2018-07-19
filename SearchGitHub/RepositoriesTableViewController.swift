@@ -58,10 +58,13 @@ class RepositoriesTableViewController: UITableViewController, SFSafariViewContro
         cell.avatar.image = UIImage(data: data!)
         cell.avatar.circular()
         
-        cell.fullNameRepo.text = self.repositories[indexPath.row].full_name
+        cell.fullNameRepo.text = self.repositories[indexPath.row].name
+        cell.userRepoName.text = "by: " + (self.repositories[indexPath.row].owner?.login ?? "")
+        
+        cell.iconProjects.isHidden = !(self.repositories[indexPath.row].has_projects ?? false)
         
         // Find last update.
-        cell.updateRepo.text = self.repositories[indexPath.row].updated_at
+        cell.updateRepo.text = "Last update: " + (self.repositories[indexPath.row].updated_at ?? "")
         
         return cell
     }

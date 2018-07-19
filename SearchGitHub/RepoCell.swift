@@ -14,5 +14,7 @@ class RepoCell: UITableViewCell {
     @IBOutlet weak var fullNameRepo: UILabel!
     @IBOutlet weak var updateRepo: UILabel!
     
+    @IBOutlet weak var userRepoName: UILabel!
+    @IBOutlet weak var iconProjects: UIImageView!
     
 }
