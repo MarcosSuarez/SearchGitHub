@@ -10,6 +10,7 @@
 		1727219220FFB319000216E7 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1727219120FFB319000216E7 /* Extension.swift */; };
 		17374FDC20FE505600C0B083 /* RepositoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17374FDB20FE505600C0B083 /* RepositoriesTableViewController.swift */; };
 		1738BD6820FF3513004DA7E3 /* RepoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1738BD6720FF3513004DA7E3 /* RepoCell.swift */; };
+		17755227210234B60093D926 /* DataRepoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17755226210234B60093D926 /* DataRepoCell.swift */; };
 		17D2A7A520FCA85100EBA290 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D2A7A420FCA85100EBA290 /* AppDelegate.swift */; };
 		17D2A7AA20FCA85100EBA290 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17D2A7A820FCA85100EBA290 /* Main.storyboard */; };
 		17D2A7AC20FCA85900EBA290 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17D2A7AB20FCA85900EBA290 /* Assets.xcassets */; };
@@ -40,6 +41,7 @@
 		1727219120FFB319000216E7 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		17374FDB20FE505600C0B083 /* RepositoriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesTableViewController.swift; sourceTree = "<group>"; };
 		1738BD6720FF3513004DA7E3 /* RepoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoCell.swift; sourceTree = "<group>"; };
+		17755226210234B60093D926 /* DataRepoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRepoCell.swift; sourceTree = "<group>"; };
 		17D2A7A120FCA85100EBA290 /* SearchGitHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SearchGitHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17D2A7A420FCA85100EBA290 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17D2A7A920FCA85100EBA290 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -104,10 +106,11 @@
 			isa = PBXGroup;
 			children = (
 				1727219120FFB319000216E7 /* Extension.swift */,
+				17755226210234B60093D926 /* DataRepoCell.swift */,
+				1738BD6720FF3513004DA7E3 /* RepoCell.swift */,
 				17D2A7A420FCA85100EBA290 /* AppDelegate.swift */,
 				17D2A7D220FCA8BF00EBA290 /* APIGitHub.swift */,
 				17374FDB20FE505600C0B083 /* RepositoriesTableViewController.swift */,
-				1738BD6720FF3513004DA7E3 /* RepoCell.swift */,
 				17D2A7A820FCA85100EBA290 /* Main.storyboard */,
 				17D2A7AB20FCA85900EBA290 /* Assets.xcassets */,
 				17D2A7AD20FCA85900EBA290 /* LaunchScreen.storyboard */,
@@ -270,6 +273,7 @@
 				17D2A7D320FCA8BF00EBA290 /* APIGitHub.swift in Sources */,
 				17374FDC20FE505600C0B083 /* RepositoriesTableViewController.swift in Sources */,
 				1738BD6820FF3513004DA7E3 /* RepoCell.swift in Sources */,
+				17755227210234B60093D926 /* DataRepoCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
