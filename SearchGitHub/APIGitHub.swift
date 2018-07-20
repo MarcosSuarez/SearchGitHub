@@ -37,24 +37,31 @@ struct GHOwner: Codable {
 /// API to request information from GitHub
 class APIGitHub {
     
+    struct GHPagination {
+        var nextPage:String = "&page=1"
+        var previosPage:String = "&page=1"
+        var lastPage:String = "&page=1"
+    }
+    
     private static let basePath = "https://api.github.com/"
     private static let searchRepo = "search/repositories?q="
     private static let hasProyectPath = "+has_projects"
     
     static var withPublicProyect:Bool = false
     
+    static var pagination = GHPagination()
+    
     private init() {}
     
     /// Search repositories by String.
     static func repositories(by: String, completion: @escaping ([GHRepository])-> Void) {
-    
+        
         let textSearch = by.replacingOccurrences(of: " ", with: "+")
         
         guard let url = URL(string: basePath + searchRepo + textSearch + (withPublicProyect ? hasProyectPath : "") ) else { completion([]); return }
         print("URL: \n",url)
         
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
+        URLSession.shared.dataTask(with: url) { (data:Data?, response: URLResponse?, error: Error?) in
             
             guard error == nil else {
                 print("--- request failed: \n",error ?? "Error hasn't description")
@@ -62,7 +69,7 @@ class APIGitHub {
                 return
             }
             
-            print("Respuesta del servidor Github: \n", response ?? "")
+            setupPagination(response: response, textSearch: textSearch)
             
             if let data = data {
                 do {
@@ -77,4 +84,41 @@ class APIGitHub {
             }
             }.resume()
     }
+    
+    private static func setupPagination(response: URLResponse?, textSearch: String) {
+        /* Example Github HEADER Link
+         <https://api.github.com/search/repositories?q=Swift&page=29>; rel="prev",
+         <https://api.github.com/search/repositories?q=Swift&page=31>; rel="next",
+         <https://api.github.com/search/repositories?q=Swift&page=34>; rel="last",
+         <https://api.github.com/search/repositories?q=Swift&page=1>; rel="first"
+        */
+        
+        if let httpResponse = response as? HTTPURLResponse,
+            let linkHeader = httpResponse.allHeaderFields["Link"] as? String {
+            
+            // separated components by ,
+            let links = linkHeader.components(separatedBy: ",")
+            
+            links.forEach({
+                let linkComponents = $0.components(separatedBy:"; ")
+                let cleanborder = linkComponents[0].replacingOccurrences(of: ">", with: "")
+                let cleanPage = cleanborder.replacingOccurrences(of: "<", with: "")
+                
+                if linkComponents[1].contains("prev") {
+                    pagination.previosPage = cleanPage
+                }
+                
+                if linkComponents[1].contains("next") {
+                    pagination.nextPage = cleanPage
+                }
+                
+                if linkComponents[1].contains("last") {
+                    pagination.lastPage = cleanPage
+                }
+            })
+        }
+        
+        print(pagination)
+        
+    } // End setupPagination
 }
