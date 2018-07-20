@@ -20,6 +20,11 @@ class RepositoriesTableViewController: UITableViewController, SFSafariViewContro
         
         // preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
+        // Add background image
+        let imageBackground = UIImageView(image: UIImage(named: "github.png"))
+        imageBackground.contentMode = .scaleAspectFit
+        tableView.backgroundView = imageBackground
+        
     }
     
     // MARK: - Safari
