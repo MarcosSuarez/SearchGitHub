@@ -13,6 +13,8 @@ class RepositoriesTableViewController: UITableViewController, SFSafariViewContro
     
     var repositories = [GHRepository]()
     
+    var loadingIndicator = UIActivityIndicatorView()
+    
     @IBOutlet weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
@@ -20,11 +22,25 @@ class RepositoriesTableViewController: UITableViewController, SFSafariViewContro
         
         // preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
+        
         // Add background image
-        let imageBackground = UIImageView(image: UIImage(named: "github.png"))
+        let imageBackground = UIImageView(image: UIImage(named: "github-octocat.png"))
         imageBackground.contentMode = .scaleAspectFit
+        tableView.backgroundColor = UIColor.lightGray
         tableView.backgroundView = imageBackground
         
+        // Activity indicator
+        setupLoading()
+    }
+    
+    // MARK: - Methods
+    func setupLoading() {
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.activityIndicatorViewStyle = .whiteLarge
+        loadingIndicator.stopAnimating()
+        loadingIndicator.center = self.view.center
+        loadingIndicator.layer.backgroundColor = UIColor.black.cgColor
+        self.view.addSubview(loadingIndicator)
     }
     
     // MARK: - Safari
@@ -58,6 +74,14 @@ class RepositoriesTableViewController: UITableViewController, SFSafariViewContro
         
         cell.load(repo: repositories[indexPath.row])
         
+        // Control page.
+        if indexPath.row == Int(repositories.count * 3/4),
+            APIGitHub.pagination.nextPage != APIGitHub.pagination.lastPage {
+            // add new page.
+            APIGitHub.repositories(by: APIGitHub.pagination.nextPage) { (nextRepositories) in
+                self.repositories += nextRepositories
+            }
+        }
         return cell
     }
     
@@ -77,6 +101,9 @@ extension RepositoriesTableViewController: UISearchBarDelegate {
         
         guard let searchText = searchBar.text, !searchText.isEmpty else { return }
         
+        loadingIndicator.isHidden = false
+        loadingIndicator.startAnimating()
+        
         APIGitHub.repositories(by: searchText) { (array) in
             
             print("total repositorios: ", array.count)
@@ -85,6 +112,8 @@ extension RepositoriesTableViewController: UISearchBarDelegate {
             
             // Update data in Cell
             DispatchQueue.main.async {
+                self.loadingIndicator.stopAnimating()
+                self.loadingIndicator.isHidden = true
                 self.tableView.reloadData()
             }
         }
