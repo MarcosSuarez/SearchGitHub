@@ -18,21 +18,18 @@ class RepoCell: UITableViewCell {
     @IBOutlet weak var iconProjects: UIImageView!
     
     
-    func load(repo: GHRepository) {
+    func load(repo: DataRepoCell) {
         
         // Find Avatar.
-        if let url = URL(string: (repo.owner?.avatar_url)!) {
-            let data = try? Data(contentsOf: url)
-            avatar.image = UIImage(data: data!)
-            avatar.circular()
-        }
+        avatar.image = repo.avatar
+        avatar.circular()
         
-        fullNameRepo.text = repo.name
-        userRepoName.text = "by: " + (repo.owner?.login ?? "")
+        fullNameRepo.text = repo.repoName
+        userRepoName.text = "by: " + repo.username
         
-        iconProjects.isHidden = !(repo.has_projects ?? false)
+        iconProjects.isHidden = !repo.hasIconProyect
         
         // Find last update.
-        updateRepo.text = "Last update: " + (repo.updated_at ?? "")
+        updateRepo.text = "Last update: " + repo.lastUpdate
     }
 }

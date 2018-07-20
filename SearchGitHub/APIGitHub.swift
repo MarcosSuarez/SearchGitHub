@@ -87,7 +87,7 @@ class APIGitHub {
                     let decoder = JSONDecoder()
                     let myStruct = try decoder.decode(GHSearchRepo.self, from: data)
                     print("Resultados Incompletos: ",myStruct.incomplete_results)
-                    print("Total de repositorios: ",myStruct.total_count)
+                    print("Total repositorios en GitHUB: ",myStruct.total_count)
                     completion(myStruct.items)
                 } catch {
                     print("--- Error when decoding: ",error.localizedDescription)

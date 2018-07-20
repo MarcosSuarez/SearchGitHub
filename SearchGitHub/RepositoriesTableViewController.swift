@@ -9,9 +9,37 @@
 import UIKit
 import SafariServices
 
+struct DataRepoCell {
+    var username: String
+    var avatar:UIImage
+    
+    var repoName: String
+    var repoAddress: String
+    var lastUpdate: String
+    var hasIconProyect: Bool
+}
+
+extension DataRepoCell {
+    init(with repo: GHRepository) {
+        
+        username = repo.owner?.login ?? ""
+        
+        repoName = repo.name ?? ""
+        repoAddress = repo.html_url ?? ""
+        lastUpdate = repo.created_at ?? ""// Modificar para que incluya la foto.
+        hasIconProyect = repo.has_projects ?? false
+        
+        // Find Avatar.
+        let url = URL(string: (repo.owner?.avatar_url)!)
+        
+        let data = try? Data(contentsOf: url!)
+        self.avatar = UIImage(data: data!)!
+    }
+}
+
 class RepositoriesTableViewController: UITableViewController, SFSafariViewControllerDelegate {
     
-    var repositories = [GHRepository]()
+    var repositories = [DataRepoCell]()
     
     var loadingIndicator = UIActivityIndicatorView()
     
@@ -79,7 +107,16 @@ class RepositoriesTableViewController: UITableViewController, SFSafariViewContro
             APIGitHub.pagination.nextPage < APIGitHub.pagination.lastPage {
             // add new page
             APIGitHub.repositories(by: APIGitHub.pagination.nextURLpage) { (nextRepositories) in
-                self.repositories += nextRepositories
+                
+                print("total nuevos repositorios Agregados: ", nextRepositories.count)
+                
+                nextRepositories.forEach({ (repository) in
+                    let data = DataRepoCell(with: repository)
+                    self.repositories.append(data)
+                })
+                
+                print("TOTAL repositorios en móvil: ",self.repositories.count)
+                
                 // Update data in Cell
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -91,7 +128,7 @@ class RepositoriesTableViewController: UITableViewController, SFSafariViewContro
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Go to detail.
-        goRepositoryDetail(url: repositories[indexPath.row].html_url!)
+        goRepositoryDetail(url: repositories[indexPath.row].repoAddress)
     }
 }
 
@@ -108,11 +145,17 @@ extension RepositoriesTableViewController: UISearchBarDelegate {
         loadingIndicator.isHidden = false
         loadingIndicator.startAnimating()
         
+        repositories.removeAll()
+        tableView.reloadData()
+        
         APIGitHub.repositories(by: searchText) { (array) in
             
-            print("total repositorios: ", array.count)
+            print("total nuevos repositorios: ", array.count)
             
-            self.repositories = array
+            array.forEach({ (repository) in
+                let data = DataRepoCell(with: repository)
+                self.repositories.append(data)
+            })
             
             // Update data in Cell
             DispatchQueue.main.async {
