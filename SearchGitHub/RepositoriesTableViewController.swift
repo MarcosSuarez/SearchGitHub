@@ -75,11 +75,15 @@ class RepositoriesTableViewController: UITableViewController, SFSafariViewContro
         cell.load(repo: repositories[indexPath.row])
         
         // Control page.
-        if indexPath.row == Int(repositories.count * 3/4),
-            APIGitHub.pagination.nextPage != APIGitHub.pagination.lastPage {
-            // add new page.
-            APIGitHub.repositories(by: APIGitHub.pagination.nextPage) { (nextRepositories) in
+        if !APIGitHub.isLoading, indexPath.row == Int(repositories.count * 3/4),
+            APIGitHub.pagination.nextPage < APIGitHub.pagination.lastPage {
+            // add new page
+            APIGitHub.repositories(by: APIGitHub.pagination.nextURLpage) { (nextRepositories) in
                 self.repositories += nextRepositories
+                // Update data in Cell
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
         }
         return cell
