@@ -61,8 +61,8 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="by: User Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D5Z-Ht-Xbx">
-                                            <rect key="frame" x="89" y="31" width="244" height="23"/>
-                                            <fontDescription key="fontDescription" name="SnellRoundhand" family="Snell Roundhand" pointSize="18"/>
+                                            <rect key="frame" x="89" y="31" width="244" height="21"/>
+                                            <fontDescription key="fontDescription" name="Baskerville-Italic" family="Baskerville" pointSize="18"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -97,7 +97,9 @@
                             <outlet property="delegate" destination="iSr-bZ-hjR" id="4Jc-WD-0yN"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="REPOSITORIES" id="TUn-bs-bGf"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="searchBar" destination="YvY-qd-TyR" id="ynO-7u-GRr"/>
                     </connections>
@@ -110,12 +112,18 @@
         <scene sceneID="Ad9-oa-QvC">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aXA-jl-CSO" sceneMemberID="viewController">
-                    <toolbarItems/>
+                    <toolbarItems>
+                        <barButtonItem title="Item" id="OXP-pg-0Em"/>
+                        <barButtonItem title="Item" id="Tuk-dL-mSs"/>
+                    </toolbarItems>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="kIQ-n9-Ypy">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="5Gw-E1-Rz3">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="iSr-bZ-hjR" kind="relationship" relationship="rootViewController" id="Fml-RN-yW6"/>
                     </connections>

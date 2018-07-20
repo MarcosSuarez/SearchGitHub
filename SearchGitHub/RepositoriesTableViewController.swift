@@ -51,20 +51,7 @@ class RepositoriesTableViewController: UITableViewController, SFSafariViewContro
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "repoCell", for: indexPath) as! RepoCell
         
-        // Find Avatar.
-        let url = URL(string: (self.repositories[indexPath.row].owner?.avatar_url!)!)
-        let data = try? Data(contentsOf: url!)
-        
-        cell.avatar.image = UIImage(data: data!)
-        cell.avatar.circular()
-        
-        cell.fullNameRepo.text = self.repositories[indexPath.row].name
-        cell.userRepoName.text = "by: " + (self.repositories[indexPath.row].owner?.login ?? "")
-        
-        cell.iconProjects.isHidden = !(self.repositories[indexPath.row].has_projects ?? false)
-        
-        // Find last update.
-        cell.updateRepo.text = "Last update: " + (self.repositories[indexPath.row].updated_at ?? "")
+        cell.load(repo: repositories[indexPath.row])
         
         return cell
     }
