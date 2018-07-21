@@ -31,6 +31,7 @@ struct DataRepoCell {
         } else {
             let dateFormat = DateFormatter()
             dateFormat.timeZone = TimeZone(abbreviation: "UTC")
+            dateFormat.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
             dateLastUpdate = dateFormat.date(from: dateGitHub)
         }
         
@@ -51,9 +52,8 @@ extension DataRepoCell {
         repoAddress = repo.html_url ?? ""
         hasIconProyect = repo.has_projects ?? false
         
-        lastUpdate = DataRepoCell.intervalTimeFrom(date: repo.pushed_at) //repo.created_at ?? "" }
-        
-        
+        lastUpdate = DataRepoCell.intervalTimeFrom(date: repo.pushed_at)
+
         // Find Avatar.
         let url = URL(string: (repo.owner?.avatar_url)!)
         
