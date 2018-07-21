@@ -22,6 +22,7 @@ struct GHRepository: Codable {
     let owner: GHOwner?
     let created_at: String? //"created_at": "2016-09-19T19:31:57Z",
     let updated_at: String? //"updated_at": "2016-09-19T19:35:15Z",
+    let pushed_at: String?
     let language: String? //"language": "Swift"
     let html_url: String? // Repository Web
     let description: String?

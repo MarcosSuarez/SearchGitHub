@@ -16,6 +16,30 @@ struct DataRepoCell {
     var repoAddress: String
     var lastUpdate: String
     var hasIconProyect: Bool
+    
+    // Find time difference between today and the latest update.
+    static private func intervalTimeFrom(date gitHubDate: String?) -> String {
+        
+        guard let dateGitHub = gitHubDate else { return "" }
+        
+        var dateLastUpdate:Date!
+        
+        if #available(iOS 10.0, *) {
+            let dateFormat = ISO8601DateFormatter()
+            dateFormat.timeZone = TimeZone(abbreviation: "UTC")
+            dateLastUpdate = dateFormat.date(from: dateGitHub)
+        } else {
+            let dateFormat = DateFormatter()
+            dateFormat.timeZone = TimeZone(abbreviation: "UTC")
+            dateLastUpdate = dateFormat.date(from: dateGitHub)
+        }
+        
+        let dateComponent = DateComponentsFormatter()
+        dateComponent.unitsStyle = .short
+        dateComponent.allowedUnits = [.year,.month,.day,.hour,.minute]
+        
+        return dateComponent.string(from: dateLastUpdate, to: Date())!
+    }
 }
 
 extension DataRepoCell {
@@ -25,8 +49,10 @@ extension DataRepoCell {
         
         repoName = repo.name ?? ""
         repoAddress = repo.html_url ?? ""
-        lastUpdate = repo.created_at ?? ""// Modificar para que incluya la foto.
         hasIconProyect = repo.has_projects ?? false
+        
+        lastUpdate = DataRepoCell.intervalTimeFrom(date: repo.pushed_at) //repo.created_at ?? "" }
+        
         
         // Find Avatar.
         let url = URL(string: (repo.owner?.avatar_url)!)
