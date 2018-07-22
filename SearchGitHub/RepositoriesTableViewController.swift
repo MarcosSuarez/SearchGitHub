@@ -43,6 +43,27 @@ class RepositoriesTableViewController: UITableViewController, SFSafariViewContro
         self.view.addSubview(loadingIndicator)
     }
     
+    func loadData(from urlGitHub: String) {
+        APIGitHub.repositories(by: urlGitHub) { (nextRepositories) in
+            
+            print("total nuevos repositorios Agregados: ", nextRepositories.count)
+            
+            nextRepositories.forEach({ (repository) in
+                let data = DataRepoCell(with: repository)
+                self.repositories.append(data)
+            })
+            
+            print("TOTAL repositorios en móvil: ",self.repositories.count)
+            
+            // Update data in Cell
+            DispatchQueue.main.async {
+                self.loadingIndicator.stopAnimating()
+                self.loadingIndicator.isHidden = true
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
     // MARK: - Safari
     private func goRepositoryDetail(url: String) {
         
@@ -78,22 +99,7 @@ class RepositoriesTableViewController: UITableViewController, SFSafariViewContro
         if !APIGitHub.isLoading, indexPath.row == Int(repositories.count * 3/4),
             APIGitHub.pagination.nextPage < APIGitHub.pagination.lastPage {
             // add new page
-            APIGitHub.repositories(by: APIGitHub.pagination.nextURLpage) { (nextRepositories) in
-                
-                print("total nuevos repositorios Agregados: ", nextRepositories.count)
-                
-                nextRepositories.forEach({ (repository) in
-                    let data = DataRepoCell(with: repository)
-                    self.repositories.append(data)
-                })
-                
-                print("TOTAL repositorios en móvil: ",self.repositories.count)
-                
-                // Update data in Cell
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
+            loadData(from: APIGitHub.pagination.nextURLpage)
         }
         return cell
     }
@@ -113,29 +119,13 @@ extension RepositoriesTableViewController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
         
         guard let searchText = searchBar.text, !searchText.isEmpty else { return }
-        
         loadingIndicator.isHidden = false
         loadingIndicator.startAnimating()
         
         repositories.removeAll()
         tableView.reloadData()
         
-        APIGitHub.repositories(by: searchText) { (array) in
-            
-            print("total nuevos repositorios: ", array.count)
-            
-            array.forEach({ (repository) in
-                let data = DataRepoCell(with: repository)
-                self.repositories.append(data)
-            })
-            
-            // Update data in Cell
-            DispatchQueue.main.async {
-                self.loadingIndicator.stopAnimating()
-                self.loadingIndicator.isHidden = true
-                self.tableView.reloadData()
-            }
-        }
+        loadData(from: searchText)
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
