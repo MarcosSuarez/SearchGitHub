@@ -52,9 +52,9 @@ class APIGitHub {
     
     private static let basePath = "https://api.github.com/"
     private static let searchRepo = "search/repositories?q="
-    private static let hasProyectPath = "+has_projects"
+    static let publicProyect = "+has_projects"
     
-    static var withPublicProyect:Bool = false
+    //static var withPublicProyect:Bool = false
     static var isLoading = false
     
     static var pagination = GHPagination()
@@ -66,7 +66,7 @@ class APIGitHub {
         
         let textSearch = by.replacingOccurrences(of: " ", with: "+")
         
-        guard let url = URL(string: basePath + searchRepo + textSearch + (withPublicProyect ? hasProyectPath : "") ) else { completion([]); return }
+        guard let url = URL(string: basePath + searchRepo + textSearch) else { completion([]); return }
         print("URL: \n",url)
         
         isLoading = true
@@ -95,6 +95,10 @@ class APIGitHub {
                 }
             }
             }.resume()
+    }
+    
+    static func resetPagination() {
+        pagination = GHPagination()
     }
     
     private static func setupPagination(response: URLResponse?, textSearch: String) {

@@ -9,19 +9,17 @@
 import UIKit
 import SafariServices
 
-class RepositoriesTableViewController: UITableViewController, SFSafariViewControllerDelegate {
+class RepositoriesTableViewController: UIViewController, SFSafariViewControllerDelegate {
     
     var repositories = [DataRepoCell]()
     
     var loadingIndicator = UIActivityIndicatorView()
     
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var btnPublicProyects: UIButton!
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // preserve selection between presentations
-        self.clearsSelectionOnViewWillAppear = false
         
         // Add background image
         let imageBackground = UIImageView(image: UIImage(named: "github-octocat.png"))
@@ -31,6 +29,10 @@ class RepositoriesTableViewController: UITableViewController, SFSafariViewContro
         
         // Activity indicator
         setupLoading()
+        
+        // Button public proyects
+        btnPublicProyects.tintColor = .white
+        btnPublicProyects.backgroundColor = tableView.backgroundColor
     }
     
     // MARK: - Methods
@@ -76,20 +78,48 @@ class RepositoriesTableViewController: UITableViewController, SFSafariViewContro
         safari.delegate = self
     }
     
+    // MARK: - Search
+    func startSearch() {
+        searchBar.showsCancelButton = false
+        searchBar.resignFirstResponder()
+        
+        repositories.removeAll()
+        APIGitHub.resetPagination()
+        tableView.reloadData()
+        
+        guard let searchText = searchBar.text, !searchText.isEmpty else { return }
+        loadData(from: (isPressed ? searchText + APIGitHub.publicProyect : searchText))
+        
+        loadingIndicator.isHidden = false
+        loadingIndicator.startAnimating()
+    }
+    
+    var isPressed:Bool = false
+    // MARK: - Filter proyects
+    @IBAction func pressedFilterButton(_ sender: UIButton) {
+       
+        isPressed = !isPressed
+        sender.tintColor = (isPressed) ? searchBar.tintColor : .white
+        startSearch()
+    }
+}
+
+extension RepositoriesTableViewController: UITableViewDelegate, UITableViewDataSource {
+    
     // MARK: - Table view data source
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return repositories.count
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 75.0
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "repoCell", for: indexPath) as! RepoCell
         
@@ -104,7 +134,7 @@ class RepositoriesTableViewController: UITableViewController, SFSafariViewContro
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Go to detail.
         goRepositoryDetail(url: repositories[indexPath.row].repoAddress)
     }
@@ -114,18 +144,7 @@ class RepositoriesTableViewController: UITableViewController, SFSafariViewContro
 extension RepositoriesTableViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-        searchBar.showsCancelButton = false
-        searchBar.resignFirstResponder()
-        
-        guard let searchText = searchBar.text, !searchText.isEmpty else { return }
-        loadingIndicator.isHidden = false
-        loadingIndicator.startAnimating()
-        
-        repositories.removeAll()
-        tableView.reloadData()
-        
-        loadData(from: searchText)
+        startSearch()
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
